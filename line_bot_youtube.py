@@ -1206,31 +1206,18 @@ def handle_message(event):
                 )
             )
 
-"""            
         else:
-            # 默認搜尋觀看次數排行
-            videos = youtube_bot.get_recent_etf_videos(hours_ago=48, max_results=10)
-            if videos:
-                carousel = create_etf_carousel(videos, "ETF熱門影片排行")
-                tip_message = TextMessage(text="💡 試試其他選項：", quick_reply=create_quick_reply())
-                line_bot_api.reply_message(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token,
-                        messages=[carousel, tip_message]
-                    )
+            # 未識別的指令，提示用戶
+            line_bot_api.reply_message(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(
+                        text="🤖 請選擇以下功能或輸入「說明」查看使用方式！",
+                        quick_reply=create_quick_reply()
+                    )]
                 )
-            else:
-                line_bot_api.reply_message(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token,
-                        messages=[TextMessage(
-                            text="抱歉，目前沒有找到相關的ETF影片 😅\n\n請試試輸入「說明」查看使用方式！",
-                            quick_reply=create_quick_reply()
-                        )]
-                    )
-                )
-"""
-                
+            )
+
     except Exception as e:
         print(f"處理訊息錯誤: {e}")
         try:
